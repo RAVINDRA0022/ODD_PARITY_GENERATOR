@@ -1,0 +1,33 @@
+module tb_OddParityChecker;
+    reg  [7:0] data_in;
+    reg        parity_bit;
+    wire       parity_error;
+
+    OddParityChecker uut (
+        .data_in(data_in),
+        .parity_bit(parity_bit),
+        .parity_error(parity_error)
+    );
+
+    initial begin
+        $monitor("Time: %0t | Data: %b | Parity Bit: %b | Error: %b", $time, data_in, parity_bit, parity_error);
+
+        data_in = 8'b10101011; // Odd number of 1s
+        parity_bit = 1'b0;
+        #10;
+
+        data_in = 8'b10101011; // Odd number of 1s
+        parity_bit = 1'b1;
+        #10;
+
+        data_in = 8'b11001010; // Even number of 1s
+        parity_bit = 1'b1;
+        #10;
+
+        data_in = 8'b11001010; // Even number of 1s
+        parity_bit = 1'b0;
+        #10;
+
+        $finish;
+    end
+endmodule
